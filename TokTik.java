@@ -4,7 +4,10 @@ public class TokTik
 {
     public static void main(String[] args)
     {
+        BinarySearchTree<String> tree = new BinarySearchTree<String>();
+        
         int choice = 0;
+        Scanner sc;
 
         do {
             System.out.println("Choose an action from the menu:");
@@ -19,17 +22,39 @@ public class TokTik
                 "8. Quit\n" +
                 "Enter your choice: ");
 
-                Scanner sc = new Scanner(System.in);
+                sc = new Scanner(System.in);
                 choice = Integer.parseInt(sc.next());
 
                 if(choice == 1)
                 {
-                    System.out.println("Enter the account name: ");
-                    String accountName = sc.next();
-
 
                 }
 
+                else if(choice == 2)
+                {
+                    tree.inOrder();
+                }
+
+                else if(choice == 3)
+                {
+                    System.out.println("Enter the account name: ");
+                    String accountName = sc.next();
+
+                    // Account name can't already exist
+                    BinaryTreeNode<String> existingAccount = tree.find(accountName);
+                    if(existingAccount == null)
+                    {
+                        tree.insert(accountName);
+                        System.out.println("Account successfully created!");
+                    }
+                    else
+                    {
+                        System.out.println("An account already exists with that name...");
+                    }
+                }
+
         } while(choice != 8);
+
+        sc.close();
     }
 }
