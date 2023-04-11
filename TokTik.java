@@ -4,7 +4,7 @@ public class TokTik
 {
     public static void main(String[] args)
     {
-        BinarySearchTree<String> tree = new BinarySearchTree<String>();
+        BinarySearchTree<Account> tree = new BinarySearchTree<Account>();
         
         int choice = 0;
         Scanner sc;
@@ -27,7 +27,21 @@ public class TokTik
 
                 if(choice == 1)
                 {
+                    System.out.println("Enter account name:");
+                    String accountName = sc.next();
+                    Account account = new Account(accountName, null);
 
+                    BinaryTreeNode<Account> accountNode = tree.find(account);
+                    if(accountNode != null)
+                    {
+                        //TODO: Add null check on accountNode before saying node.data --> this will throw error
+                        System.out.println("The profile description is: " + ((Account) accountNode.data).getDescription());
+                    }
+
+                    else
+                    {
+                        System.out.println(String.format(accountName, "Account %s does not exist!"));
+                    }
                 }
 
                 else if(choice == 2)
@@ -39,19 +53,91 @@ public class TokTik
                 {
                     System.out.println("Enter the account name: ");
                     String accountName = sc.next();
+                    System.out.println("Enter the account description: ");
+                    String description = sc.next();
+                    Account account = new Account(accountName, description);
 
                     // Account name can't already exist
-                    BinaryTreeNode<String> existingAccount = tree.find(accountName);
+                    BinaryTreeNode<Account> existingAccount = tree.find(account);
                     if(existingAccount == null)
                     {
-                        tree.insert(accountName);
-                        System.out.println("Account successfully created!");
+                        tree.insert(account);
+                        System.out.println("Successfully created account " + account.getAccountName());
                     }
+
                     else
                     {
-                        System.out.println("An account already exists with that name...");
+                        System.out.println("An account with that name already exists!");
                     }
                 }
+
+                else if(choice == 4)
+                {
+                    System.out.println("Enter the account name: ");
+                    String accountName = sc.next();
+
+                    Account account = new Account(accountName, null);
+                    BinaryTreeNode<Account> accountNode = tree.find(account);
+
+                    if(accountNode != null)
+                    {
+                        tree.delete(account);
+                    }
+
+                    else
+                    {
+                        System.out.println("Account with name " + accountName + " does not exist.");
+                    }
+                }
+
+                else if(choice == 5)
+                {
+                    System.out.println("Enter the account name: ");
+                    String accountName = sc.next();
+
+                    Account account = new Account(accountName, null);
+                    BinaryTreeNode<Account> accountNode = tree.find(account);
+
+                    account = (Account) accountNode.data;
+                    
+                    System.out.println(account.getPosts());
+                }
+
+                else if(choice == 6)
+                {
+                    System.out.println("Enter account name:");
+                    String accountName = sc.next();
+                    Account account = new Account(accountName, null);
+
+                    BinaryTreeNode<Account> accountNode = tree.find(account);
+
+                    account = (Account) accountNode.data;
+
+                    // First check if account with name exists
+                    // Second check if there are any accounts ; can't have posts without accounts
+                    if(account != null && tree.getSize() > 0)
+                    {
+                        System.out.println("Enter post title:");
+                        String title = sc.next();
+                        String video = "video" + tree.getSize() + ".mpg";
+
+                        Post post = new Post(title, video);
+                        account.addPost(post);
+
+                        System.out.println(String.format(accountName, post.toString(), "Added post to user %s's account!%n%s"));
+                    }
+
+                    else
+                    {
+                        System.out.println(String.format(accountName, "Account %s does not exist!"));
+                    }
+                }
+
+                else if(choice == 7)
+                {
+                    
+                }
+                
 
         } while(choice != 8);
 
