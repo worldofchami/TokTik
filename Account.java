@@ -9,12 +9,12 @@ public class Account implements Comparable<Account>
     {
         this.accountName = accountName;
         this.description = description;
-        posts = null;
+        this.posts = new ArrayList<Post>();
     }
 
     public void addPost(Post post)
     {
-        posts.add(post);
+        this.posts.add(post);
     }
 
     public String getPosts()

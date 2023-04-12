@@ -1,3 +1,4 @@
+import java.io.File;
 import java.util.Scanner;
 
 public class TokTik
@@ -119,9 +120,13 @@ public class TokTik
                     {
                         System.out.println("Enter post title:");
                         String title = sc.next();
-                        String video = "video" + tree.getSize() + ".mpg";
 
-                        Post post = new Post(title, video);
+                        String video = "video" + tree.getSize() + ".mpg";
+                        
+                        System.out.println("Enter number of likes:");
+                        int likes = sc.nextInt();
+
+                        Post post = new Post(title, video, likes);
                         account.addPost(post);
 
                         System.out.println(String.format(accountName, post.toString(), "Added post to user %s's account!%n%s"));
@@ -135,6 +140,87 @@ public class TokTik
 
                 else if(choice == 7)
                 {
+                    System.out.println("Enter a filename");
+                    String fileName = "test.txt";
+                    // TODO: uncomment to accept user input
+                    // String fileName = sc.next();
+                    try
+                    {
+                        Scanner scFile = new Scanner(new File(fileName));
+
+                        // TODO: place for loop body in here
+                        // while(scFile.hasNext())
+                        // {
+
+                        // }
+
+                        for(int i = 0; i < 2; i++)
+                        {
+                            String command = scFile.nextLine();
+                            Scanner scLine = new Scanner(command).useDelimiter(" ");
+
+                            String commandType = scLine.next();
+                            String accountName = scLine.next();
+
+                            if(commandType.equals("Create"))
+                            {
+                                String description = "";
+
+                                while (scLine.hasNext())
+                                {
+                                    description += scLine.next() + " ";
+                                }
+
+                                description = description.trim();
+
+                                Account account = new Account(accountName, description);
+
+                                tree.insert(account);
+                            }
+
+                            else if(commandType.equals("Add"))
+                            {
+                                String video = scLine.next();
+                                int likes = scLine.nextInt();
+
+                                String title = "";
+
+                                while (scLine.hasNext())
+                                {
+                                    title += scLine.next() + " ";
+                                }
+
+                                Account account = new Account(accountName, null);
+                                BinaryTreeNode<Account> accountNode = tree.find(account);
+
+                                if(accountNode != null)
+                                {
+                                    Post post = new Post(title, video, likes);
+                                    account = (Account) accountNode.data;
+
+                                    tree.delete(account);
+
+                                    account.addPost(post);
+
+                                    tree.insert(account);
+
+                                    System.out.println("Succesfully added post to account " + accountName);
+                                }
+
+                                else
+                                {
+                                    System.out.println("Account " + accountName + " does not exist!");
+                                }
+                            }
+                        }
+
+                        System.out.println("Successfully run commands.");
+                    }
+
+                    catch(Exception e)
+                    {
+                        System.out.println(e.toString());
+                    }
                     
                 }
                 
