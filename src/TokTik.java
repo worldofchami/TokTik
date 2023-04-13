@@ -1,3 +1,4 @@
+package src;
 import java.io.File;
 import java.util.Scanner;
 
@@ -141,20 +142,14 @@ public class TokTik
                 else if(choice == 7)
                 {
                     System.out.println("Enter a filename");
-                    String fileName = "test.txt";
+                    String fileName = "dataset.txt";
                     // TODO: uncomment to accept user input
                     // String fileName = sc.next();
                     try
                     {
                         Scanner scFile = new Scanner(new File(fileName));
 
-                        // TODO: place for loop body in here
-                        // while(scFile.hasNext())
-                        // {
-
-                        // }
-
-                        for(int i = 0; i < 2; i++)
+                        while(scFile.hasNext())
                         {
                             String command = scFile.nextLine();
                             Scanner scLine = new Scanner(command).useDelimiter(" ");
@@ -211,6 +206,8 @@ public class TokTik
                                 {
                                     System.out.println("Account " + accountName + " does not exist!");
                                 }
+
+                                scLine.close();
                             }
                         }
 

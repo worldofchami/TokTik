@@ -1,3 +1,4 @@
+package src;
 public class Post
 {
     private String title, video;
