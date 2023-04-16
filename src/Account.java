@@ -18,27 +18,16 @@ public class Account implements Comparable<Account>
         this.posts.add(post);
     }
 
-    public String getPosts()
+    public String getPostsAsString()
     {
         String postsAsStr = "";
-        // TODO: find more efficient way to not print last newline char
         if(posts.size() > 0)
         {
-            int count = 0;
-
             for(Post post : posts)
-            {
-                count++;
-                if(count < posts.size())
-                {
                     postsAsStr += post.toString() + "\n";
-                }
 
-                else
-                    postsAsStr += post.toString();
-            }
-
-            return postsAsStr;
+            // Removes last newline character
+            return postsAsStr.trim();
         }
 
         return "No posts exist for user " + this.accountName;
@@ -52,6 +41,7 @@ public class Account implements Comparable<Account>
 
     public String getAccountName() { return this.accountName; }
     public String getDescription() { return this.description; }
+    public ArrayList<Post> getPosts() { return posts; }
 
     public String toString()
     {
