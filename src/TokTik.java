@@ -42,7 +42,6 @@ public class TokTik
                     BinaryTreeNode<Account> accountNode = tree.find(account);
                     if(accountNode != null)
                     {
-                        //TODO: Add null check on accountNode before saying node.data --> this will throw error
                         System.out.println("The profile description is: " + ((Account) accountNode.data).getDescription());
                     }
 
@@ -179,7 +178,7 @@ public class TokTik
                     }
                     catch(Exception e)
                     {
-                        System.out.println(e.toString());
+                        System.out.println("File not found! Try again.");
                     }
                 }
                 else if(choice == 8)
@@ -197,11 +196,16 @@ public class TokTik
                 }
                 else if(choice == 9)
                 {
-                    // TODO: add check for if user is actually following anyone
+                    if(following.size() == 0)
+                    {
+                        System.out.println("You aren't following anyone at the moment!");
+                        continue;
+                    }
+
                     System.out.println("Welcome to your For You page!");
                     System.out.println("You'll only see posts from people you follow.");
                     System.out.println("--------------------------------------------");
-                    System.out.println("To like a post, press L");
+                    System.out.println("To like/unlike a post, press L");
                     System.out.println("To skip to the next post, press >");
                     System.out.println("To skip to the previous post, press <");
                     System.out.println("To exit, press X");

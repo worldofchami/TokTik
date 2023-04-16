@@ -1,14 +1,14 @@
 JCOMP=javac
 
-.SUFFIXES: .java .class
+.SUFFIXES: ./src/.java ./bin/.class
 
 .java.class:
-	$(JCOMP) $.java
+	$(JCOMP) ./src/$.java
 
 CLASSES=\
-	Account.java\
-	Post.java\
-	TokTik.java
+	./bin/Account.class\
+	./bin/Post.class\
+	./bin/TokTik.class
 
 default: classes
 
