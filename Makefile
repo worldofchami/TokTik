@@ -1,18 +1,22 @@
-JCOMP=javac
+JAVAC=/usr/bin/javac
 
-.SUFFIXES: ./src/.java ./bin/.class
+.SUFFIXES: .java .class
 
-.java.class:
-	$(JCOMP) ./src/$.java
+SRCDIR=src
+BINDIR=bin
 
-CLASSES=\
-	./bin/Account.class\
-	./bin/Post.class\
-	./bin/TokTik.class
+$(BINDIR)/%.class:$(SRCDIR)/%.java
 
-default: classes
+$(JAVAC) -d $(BINDIR)/ -cp $(BINDIR) $<
 
-classes: $(CLASSES:.java=./bin/.class)
+CLASSES=Post.class Account.class BinaryTreeNode.class BinaryTree.class BTQueueNode.class BTQueue.class BinarySearchTree.class TokTik.class
+
+CLASS_FILES=$(CLASSES:%.class=$(BINDIR)/%.class)
+
+default: $(CLASS_FILES)
 
 clean:
-	$(rm) ./bin/*.class
+	rm $(BINDIR)/*.class
+
+run: $(CLASS_FILES)
+	java -cp bin TokTik
