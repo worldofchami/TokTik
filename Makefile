@@ -2,7 +2,6 @@ JAVAC=/usr/bin/javac
 JAVA=/usr/bin/java
 
 .SUFFIXES: .java .class
-
 SRCDIR=src
 BINDIR=bin
 
