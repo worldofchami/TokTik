@@ -3,6 +3,10 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * CLI for TokTik that interacts with Account and Post classes
+ */
+
 public class TokTik
 {
     public static void main(String[] args)
@@ -28,9 +32,9 @@ public class TokTik
                 "8. Follow an account\n" +
                 "9. View your For You page\n" +
                 "10. Quit\n" +
-                "Enter your choice: ");
+                "Enter your choice: \n");
 
-                sc = new Scanner(System.in);
+                sc = new Scanner(System.in).useDelimiter("\n");
                 choice = Integer.parseInt(sc.next());
 
                 if(choice == 1)
@@ -47,7 +51,7 @@ public class TokTik
 
                     else
                     {
-                        System.out.println(String.format(accountName, "Account %s does not exist!"));
+                        System.out.println(String.format("Account %s does not exist!", accountName));
                     }
                 }
                 else if(choice == 2)
@@ -58,13 +62,15 @@ public class TokTik
                 {
                     System.out.println("Enter the account name: ");
                     String accountName = sc.next();
-                    System.out.println("Enter the account description: ");
-                    String description = sc.next();
-                    Account account = new Account(accountName, description);
+                    Account account = new Account(accountName, null);
                     // Account name can't already exist
-                    BinaryTreeNode<Account> existingAccount = tree.find(account);
-                    if(existingAccount == null)
+                    BinaryTreeNode<Account> accountNode = tree.find(account);
+                    if(accountNode == null)
                     {
+                        System.out.println("Enter the account description: ");
+                        String description = sc.next();
+                        account = new Account(accountName, description);
+
                         tree.insert(account);
                         System.out.println("Successfully created account " + account.getAccountName());
                     }
@@ -82,11 +88,11 @@ public class TokTik
                     if(accountNode != null)
                     {
                         tree.delete(account);
+                        System.out.println(String.format("Account with name %s has been deleted.", accountName));
                     }
                     else
                     {
-                        System.out.println("Account with name " + accountName + " does not exist.");
-                    }
+                        System.out.println(String.format("Account with name %s does not exist.", accountName));                    }
                 }
                 else if(choice == 5)
                 {
@@ -94,9 +100,17 @@ public class TokTik
                     String accountName = sc.next();
                     Account account = new Account(accountName, null);
                     BinaryTreeNode<Account> accountNode = tree.find(account);
-                    account = (Account) accountNode.data;
-                    
-                    System.out.println(account.getPostsAsString());
+
+                    if(accountNode != null)
+                    {
+                        account = (Account) accountNode.data;
+                        System.out.println(account.getPostsAsString());
+                    }
+
+                    else
+                    {
+                        System.out.println(String.format("Account with name %s does not exist.", accountName));
+                    }
                 }
                 else if(choice == 6)
                 {
@@ -104,23 +118,25 @@ public class TokTik
                     String accountName = sc.next();
                     Account account = new Account(accountName, null);
                     BinaryTreeNode<Account> accountNode = tree.find(account);
-                    account = (Account) accountNode.data;
                     // First check if account with name exists
                     // Second check if there are any accounts ; can't have posts without accounts
-                    if(account != null && tree.getSize() > 0)
+                    if(accountNode != null)
                     {
+                        account = (Account) accountNode.data;
                         System.out.println("Enter post title:");
                         String title = sc.next();
-                        String video = "video" + tree.getSize() + ".mpg";
+                        System.out.println("Enter video name:");
+                        String video = sc.next();
                         System.out.println("Enter number of likes:");
                         int likes = sc.nextInt();
                         Post post = new Post(title, video, likes);
                         account.addPost(post);
-                        System.out.println(String.format(accountName, post.toString(), "Added post to user %s's account!%n%s"));
+                        System.out.println(String.format("Added post to user %s's account!\n%s", accountName, post.toString()));
                     }
+
                     else
                     {
-                        System.out.println(String.format(accountName, "Account %s does not exist!"));
+                        System.out.println(String.format("Account %s does not exist!", accountName));
                     }
                 }
                 else if(choice == 7)
